@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="tree_approval_management" model="ir.ui.view">
+    	<field name="name">approval.type.tree</field>
+    	<field name="model">approval.type</field>
+    	<field name="priority">2</field>
+    	<field name="arch" type="xml">
+    		<tree>
+    			<field name="name"/>					
+    		</tree>
+    	</field>
+    </record>
+
+	<record id="form_approval_management" model="ir.ui.view">
+		<field name="name">approval.type.form</field>
+		<field name="model">approval.type</field>
+		<field name="arch" type="xml">
+			<form>
+                <header>
+                    <field name="is_confirm" invisible="1"/>
+                    <button class="oe_highlight" type="object" name="confirm" string="Confirm " attrs="{'invisible': [('is_confirm', '=',True)]}"/>
+                </header>
+				<sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" placeholder="Approval Type" required="True" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                        </h1>
+                    </div>
+					<group>
+                    	<field name="approval_type" attrs="{'readonly': [('is_confirm', '=',True)]}"/> 
+                    </group>
+                        <notebook>
+                            <page string="Options" name="model_field">
+                                <group attrs="{'invisible': [('approval_type', '!=',False)]}" string="Model Fields" name="grp_model_field">
+                                    <group>
+                                        <field name="date" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_name" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="period" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_period" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="contact" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_contact" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        
+                                        <field name="item" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_item" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="multi_item" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_multi_item" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="document" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_document" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="reference" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_ref" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="payment" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_payment" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="amount" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_amount" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="quantity" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_qty" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="location" widget="radio" options="{'horizontal': true}" modifiers="{}" id="id_location" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                    </group>
+                                </group>
+                                <group attrs="{'invisible': [('approval_type', '!=',True)]}">
+                                    <group  string="Setting Business Model" >
+                                        <field name="model_id" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="approve_amount" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                        <field name="domain" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="help" string="Help">
+                                <group>
+                                    <field name="help_note" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                </group>
+                            </page>
+                            <page string="Security" name="security">
+                                <group>
+                                    <group>
+                                        <field name="group_id" string="Access Group" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="company_id" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="More Details" name="description">
+                                <group>
+                                    <field name="description" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+
+                        <notebook>
+                        	<page string="Approvers Details">
+                        		<field name="approver_ids" attrs="{'readonly': [('is_confirm', '=',True)]}">
+                                    <tree editable="bottom">
+                                        <field name="approval_type" required="1"/>
+                                        <field name="user_id" required="1"/>
+                                        <field name="group_id"/>
+                                        <field name="other_user_id"/>
+                                        <field name="user_role"/>
+                                    </tree>
+                                </field> 
+                        	</page>
+                        </notebook>
+                        <label for="number_of_approver" string="Number of Approver"/>
+                        <field name="number_of_approver" class="oe_inline" attrs="{'readonly': [('is_confirm', '=',True)]}"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+        <record id="partner_kanban_view" model="ir.ui.view">
+            <field name="name">approval.type.kanban</field>
+            <field name="model">approval.type</field>
+            <field name="arch" type="xml">
+                <kanban class="o_modules_kanban" import="false" modifiers="{}">
+                    <field name="name" modifiers="{'required':true}"/>
+                    <field name="id" modifiers="{'readonly':true}"/>       
+                    <field name="image_1920" modifiers="{}"/>
+                    <templates modifiers="{}">                    
+                        <t t-name="kanban-box" modifiers="{}">
+                            <div class="oe_module_vignette" modifiers="{}">                            
+                                <t t-if="record.id" modifiers="{}">
+                                    <img t-att-src="kanban_image('approval.type', 'image_1920', record.id.raw_value)" alt="Approval Type Image"  width="50" height="50" modifiers="{}"/>
+                                </t>        
+                                <div role="menuitem" modifiers="{}">
+                                </div>      
+                                <div class="oe_module_desc" modifiers="{}">
+                                    <h4 class="o_kanban_record_title" modifiers="{}">
+                                        <field name="name" modifiers="{'required':true}"/>       
+                                    </h4>       
+                                    <p class="oe_module_name" modifiers="{}">
+                                        <field name="name" modifiers="{}"/>        
+                                    </p>
+                                    <field name="approval_type" invisible="1"/>
+                                    <div class="oe_module_action" modifiers="{}">
+                                        <button class="btn btn-primary btn-sm oe_kanban_action oe_kanban_action_button fa fa-pencil" data-type="object" data-name="new_request" attrs="{'invisible': [('approval_type', '=',True)]}">
+                                            Create Request
+                                        </button>
+                                        <field name="is_confirm" invisible="1"/>
+                                        <button class="btn btn-primary btn-sm oe_kanban_action oe_kanban_action_button fa fa-edit" data-type="edit" attrs="{'invisible': [('is_confirm', '=',True)]}">
+                                            Edit
+                                        </button>
+                                        <button attrs="{'invisible': [('num_of_review', '=',0)]}" class="btn btn-sm btn-secondary float-right oe_kanban_action oe_kanban_action_button" data-name="review"  data-type="object" modifiers="{}" options="{}">
+                                            Review  <field name="num_of_review"/>
+                                        </button>                           
+                                    </div>
+                                </div>
+                            </div>  
+                        </t>    
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+		<record id="action_approval_type" model="ir.actions.act_window">
+            <field name="name">Approval Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">approval.type</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Records not available. Let's create approval type!
+                </p>
+            </field>
+		</record>
+
+		<menuitem id="menu_approval_mgt" name="Approval Management" groups="group_approval_user,group_approval_manager"/>
+
+		<menuitem id="menu_deshboard" name="Dashboard" parent="menu_approval_mgt" sequence="1" action= "action_approval_type"/>
+		
+</odoo>

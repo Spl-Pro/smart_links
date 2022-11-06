@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="request_mail_template" model="mail.template">
+            <field name="name">Approval Request Template</field>
+            <field name="model_id" ref="all_in_one_approval_app.model_approval_approval"/>
+            <field name="email_from">${user.partner_id.email |safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+
+                        Dear  ${object.request_by_id.name},
+                        <br /><br />
+                        Approved this <strong>${object.name}</strong> request by ,<strong>${user.name}</strong>
+                </div>
+            </field>
+        </record>
+
+        <record id="submit_request_template" model="mail.template">
+            <field name="name">Request Approval Notification</field>
+            <field name="model_id" ref="all_in_one_approval_app.model_approve_request"/>
+            <field name="email_from">${user.partner_id.email |safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;"></p>
+
+                        Submitted this <strong>${object.name}</strong> approval request by ,<strong>${user.name}</strong>
+                </div>
+            </field>
+        </record>
+
+        <record id="submit_req_template2" model="mail.template">
+            <field name="name">Submit Approval Request </field>
+            <field name="model_id" ref="all_in_one_approval_app.model_approval_approval"/>
+            <field name="email_from">${user.partner_id.email |safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;"></p>
+
+                        Dear  ${object.request_by_id.name},
+                        <br /><br />
+                        submit this <strong>${object.name}</strong> approval request by ,<strong>${user.name}</strong>
+                </div>
+            </field>
+        </record>
+
+        <!-- change approver -->
+        <record id="change_approver_template" model="mail.template">
+            <field name="name">Change Request Approver Notification</field>
+            <field name="model_id" ref="all_in_one_approval_app.model_change_approver"/>
+            <field name="email_from">${user.partner_id.email |safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;"></p>
+
+                        Changed new approver is <strong>${object.new_approver_id.name}
+                        </strong>
+                </div>
+            </field>
+        </record>
+
+        <!-- Reject request -->
+        <record id="reject_request_template" model="mail.template">
+            <field name="name">Reject Request Notification</field>
+            <field name="model_id" ref="all_in_one_approval_app.model_request_reject"/>
+            <field name="email_from">${user.partner_id.email |safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;"></p>
+                        Request Rejected by <strong>${user.name}
+                        </strong>
+                </div>
+            </field>
+        </record>
+
+        <!-- Cancel request -->
+        <record id="cancel_request_template" model="mail.template">
+            <field name="name">Cancel Request Notification</field>
+            <field name="model_id" ref="all_in_one_approval_app.model_approval_approval"/>
+            <field name="email_from">${user.partner_id.email |safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">Dear ${object.request_by_id.name}</p><br/>
+                        
+                        Cancelled Request by <strong>${user.name}
+                        </strong>
+                </div>
+            </field>
+        </record>
+
+        <!-- request rework -->
+        <record id="rework_request_template" model="mail.template">
+            <field name="name"> Request Rework Notification</field>
+            <field name="model_id" ref="all_in_one_approval_app.model_request_reject"/>
+            <field name="email_from">${user.partner_id.email |safe}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;"></p>
+                        Request go to rework by <strong>${user.name}
+                        </strong>
+                </div>
+            </field>
+        </record>
+
+</odoo>
