@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+access_approve_request,access_approve_request,model_approve_request,base.group_user,1,1,1,1
+access_price_type,access_price_type,model_approval_type,base.group_user,1,1,1,1
+
+access_approver_detail,access_approver_detail,model_approver_detail,base.group_user,1,1,1,1
+
+
+access_approval_approval,access_approval_approval,model_approval_approval,base.group_user,1,1,1,1
+
+access_request_reject,access_request_reject,model_request_reject,base.group_user,1,1,1,1
+
+access_request_rework,access_request_rework,model_request_rework,base.group_user,1,1,1,1
+
+access_change_approver,access_change_approver,model_change_approver,base.group_user,1,1,1,1
+

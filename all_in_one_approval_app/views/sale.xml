@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='action_confirm']" position="before">
+                    <field name="is_sale_req" invisible="1"/>
+
+                    <field name="is_reject" invisible="1"/>
+                    <field name="is_rework"  invisible="1"/>
+                    <field name="is_approval" invisible="1"/>
+                    <field name="req_done" invisible="1"/>
+                    <button name="sale_approval" string="Request Approval" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=','draft')]}"/>
+                    <button name="%(action_approval_show)d" string="Show Approval" type="action" class="oe_highlight" attrs="{'invisible': [('state', '!=','draft')]}"/>
+
+                    <button class="oe_highlight" type="object" name="request_rework" string="Rework Request" attrs="{'invisible': [('is_reject', '!=',True)]}"/>
+
+                </xpath>
+            </field>
+        </record>
+
+</data>
+</odoo>

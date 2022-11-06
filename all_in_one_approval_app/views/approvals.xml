@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="approval_tree" model="ir.ui.view">
+			<field name="name">approval.approval.tree</field>
+			<field name="model">approval.approval</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree create="false" edit="false">
+					<field name="name" required="1"/>
+					<field name="type_id"/>
+					<field name="approver_id"/>
+					<field name="request_by_id"/>
+					<field name="log"/>
+					<field name="state" string="Status"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="approval_form" model="ir.ui.view">
+			<field name="name">approval.approval.form</field>
+			<field name="model">approval.approval</field>
+			<field name="arch" type="xml">
+				<form create="false" edit="false">
+					<header>
+                        <field name="is_submit" invisible="1"/>
+                        <field name="is_approve_check" invisible="1"/>
+                        <field name="is_reject" invisible="1"/>
+                        <field name="is_cancel" invisible="1"/>
+                        <field name="is_change_approver" invisible="1"/>
+                        <field name="is_submit" invisible="1"/>
+                        <field name="is_origin_so" invisible="1"/>
+                        <field name="is_origin_po" invisible="1"/>
+                        <button class="oe_highlight" type="object" name="req_approve" string="Approve Request" attrs="{'invisible': ['|',('state', '!=','submit'), ('is_approve_check', '=',True)]}" groups="all_in_one_approval_app.group_approval_manager"/>
+                        <button class="oe_highlight" type="object" name="req_submit" string="Submit Request" groups="all_in_one_approval_app.group_approval_manager, all_in_one_approval_app.group_approval_user" attrs="{'invisible': [('state', '!=','draft')]}"/>
+                        <button class="oe_highlight" type="action" name="%(request_reject_action)d" string="Reject Request" attrs="{'invisible': [('state', '!=','submit')]}" groups="all_in_one_approval_app.group_approval_manager"/>
+                        <button class="oe_highlight" type="action" name="%(change_approver_action)d" string="Change Approver" attrs="{'invisible': [('state', '!=','submit')]}" groups="all_in_one_approval_app.group_approval_manager"/>
+                        <button class="oe_highlight" type="object" name="cancel_request" string="Cancel" attrs="{'invisible': [('state', '!=','submit')]}" groups="all_in_one_approval_app.group_approval_user"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+					<sheet>
+						<group>
+							<field name="name" required="1"/>
+							<field name="type_id" readonly="1"/>
+							<field name="origin_id" attrs="{'invisible': [('is_origin_so', '!=',True)]}"/>
+							<field name="origin_po_id" attrs="{'invisible': [('is_origin_po', '!=',True)]}"/>
+						</group>
+						<group>
+							<field name="request_by_id" readonly="1"/>
+							<field name="approver_id" readonly="1"/>
+							<field name="start_date" attrs="{'invisible': [('is_date', '=',False)]}" class="oe_inline"/>
+							<field name="expire_date" class="oe_inline"/>
+						</group>
+						<field name="is_payment" invisible="1"/>
+						<field name="is_date" invisible="1"/>
+						<field name="is_contact" invisible="1"/>
+						<field name="is_item" invisible="1"/>
+						<field name="multi_item" invisible="1"/>
+						<field name="is_document" invisible="1"/>
+						<field name="is_reference" invisible="1"/>
+						<field name="is_multi_item" invisible="1"/>
+						<field name="is_payment" invisible="1"/>
+						<field name="is_amount" invisible="1"/>
+						<field name="is_quantity" invisible="1"/>
+						<field name="is_location" invisible="1"/>
+						<field name="is_period" invisible="1"/>
+					   	<field name="is_new_model" invisible="1"/>
+				
+						<group name="selected_fields" string="Fields" attrs="{'invisible': [('is_new_model', '=',False)]}">
+							<group>
+								<field name="date"  attrs="{'invisible': [('is_payment', '=',False)],'required': [('is_payment', '=',True)]}"/>
+								<field name="contact"  attrs="{'invisible': [('is_contact', '=',False)],'required': [('is_contact', '=',True)]}"/>
+								<field name="item"  attrs="{'invisible': [('is_item', '=',False)],'required': [('is_item', '=',True)]}"/>
+								<field name="multi_item"  attrs="{'invisible': [('is_multi_item', '=',False)],'required': [('is_multi_item', '=',True)]}" widget="many2many_tags"/>
+								<field name="document"  attrs="{'invisible': [('is_document', '=',False)],'required': [('is_document', '=',True)]}"/>
+							</group>
+							<group>
+								<field name="payment"  attrs="{'invisible': [('is_payment', '=',False)],'required': [('is_payment', '=',True)]}"/>
+								<field name="reference"  attrs="{'invisible': [('is_reference', '=',False)],'required': [('is_reference', '=',True)]}"/>
+								<field name="amount"  attrs="{'invisible': [('is_amount', '=',False)],'required': [('is_amount', '=',True)]}"/>
+								<field name="quantity"  attrs="{'invisible': [('is_quantity', '=',False)],'required': [('is_quantity', '=',True)]}"/>
+								<field name="location"  attrs="{'invisible': [('is_location', '=',False)],'required': [('is_location', '=',True)]}"/>
+							</group>
+						</group>
+						
+						<notebook>
+							<page name="log" string="Log Details">
+								<field name="log" placeholdr="Descrition..."/>
+							</page>
+							<page name="approver_list" string="Approver List">
+								<field name="approver_ids">
+									<tree editable="bottom">
+										<field name="user_id"/>
+										<field name="user_role"/>
+										<field name="approval_type"/>
+										<field name="approve_check" invisible="1" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_approval" model="ir.actions.act_window">
+			<field name="name">Approvals</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">approval.approval</field>
+			 <field name="view_mode">tree,form,kanban</field>
+		</record>
+
+		<record id="action_approval_my" model="ir.actions.act_window">
+			<field name="name">Approvals</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">approval.approval</field>
+			<field name="view_mode">tree,form,kanban</field>
+			<field name="domain">[('request_by_id.id','=',uid)]</field>
+		</record>
+
+		<record id="action_approval_review" model="ir.actions.act_window">
+			<field name="name">Approvals</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">approval.approval</field>
+			<field name="view_mode">tree,form,kanban</field>
+			<field name="domain">[('state','=','submit')]</field>
+		</record>
+
+        <record id="action_approval_show" model="ir.actions.act_window">
+            <field name="name">Approvals</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">approval.approval</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'default_is_submit':1}</field>
+            <field name="domain">[('origin_id','=',active_id)]</field>
+        </record>
+
+        <record id="action_approval_show_po" model="ir.actions.act_window">
+            <field name="name">Approvals</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">approval.approval</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'default_is_submit':1}</field>
+            <field name="domain">[('origin_po_id','=',active_id)]</field>
+        </record>
+
+		<menuitem id="menu_approval" name="Request Approvals" parent="menu_approval_mgt" sequence="2"/>
+
+		<menuitem id="menu_my_request" name="My Request" parent="menu_approval" action="action_approval_my" sequence="1"/>
+
+		<menuitem id="menu_all_request" name="All Request" parent="menu_approval" action="action_approval" sequence="2" groups="all_in_one_approval_app.group_approval_manager"/>
+
+		<menuitem id="menu_review" name="To Review" parent="menu_approval" action="action_approval_review" sequence="3"/>
+
+	</data>
+</odoo>
