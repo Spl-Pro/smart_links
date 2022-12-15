@@ -1,0 +1,31 @@
+<openerp>
+    <data>
+
+        <record id="bid_upload_form" model="ir.ui.view">
+            <field name="name">bid.requirement.upload</field>
+            <field name="model">bid.requirement.upload</field>
+            <field name="arch" type="xml">
+                <form string="Import a CSV file">
+                    <group name="main">
+                        <field name="csv_file"/>
+                        <field name="project_id" invisible="1"/>
+                    </group>
+
+                    <footer>
+                        <button name="import_csv_file" type="object" string="Import" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+        <record id="bid_upload_action" model="ir.actions.act_window">
+            <field name="name">bid.requirement.upload</field>
+            <field name="res_model">bid.requirement.upload</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+    </data>
+</openerp>

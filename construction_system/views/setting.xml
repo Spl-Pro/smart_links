@@ -1,0 +1,60 @@
+<openerp>
+    <data>
+
+        <record id="project_config_settings_accounts_tree_view" model="ir.ui.view">
+            <field name="name">Accounting Setup</field>
+            <field name="model">project.config.settings.accounts</field>
+            <field name="arch" type="xml">
+                <tree string="Accounting Setup">
+                    <field name="retention_account"/>
+                    <field name="down_payment_account"/>
+                    <field name="income_account"/>
+                    <field name="preliminary_guarantee"/>
+                    <field name="bank_commission"/>
+                    <field name="final_guarantee"/>
+                    <field name="project_material_cost"/>
+                    <field name="sub_contract_retention_account"/>
+                    <field name="sub_contract_down_payment_account"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="project_config_settings_accounts_form_view" model="ir.ui.view">
+            <field name="name">Accounting Setup</field>
+            <field name="model">project.config.settings.accounts</field>
+            <field name="arch" type="xml">
+                <form string="Accounting Setup">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="retention_account"/>
+                                <field name="down_payment_account"/>
+                                <field name="income_account"/>
+                                <field name="sub_contract_retention_account"/>
+                                <field name="sub_contract_down_payment_account"/>
+
+                            </group>
+                            <group>
+                                <field name="preliminary_guarantee"/>
+                                <field name="bank_commission"/>
+                                <field name="final_guarantee"/>
+                                <field name="project_material_cost"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="project_config_settings_accounts_action" model="ir.actions.act_window">
+            <field name="name">Accounting Setup</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.config.settings.accounts</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="account_setting_menu" name="Account Setting" parent="project.menu_project_config"
+                  action="project_config_settings_accounts_action" sequence="11"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+        <record id="project_costing_board_tree_view" model="ir.ui.view">
+            <field name="name">project.costing.board</field>
+            <field name="model">project.costing.board</field>
+            <field name="arch" type="xml">
+                <tree string="project.costing.board">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="project_costing_board_form_view" model="ir.ui.view">
+            <field name="name">project.costing.board</field>
+            <field name="model">project.costing.board</field>
+            <field name="arch" type="xml">
+                <form string="project.costing.board">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="project_costing_board_action_view" model="ir.actions.act_window">
+            <field name="name">Project Costing Board</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.costing.board</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="project_costing_board_menu" name="Project Costing Board" parent="project_closing_menu"
+                  action="project_costing_board_action_view" sequence="2"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,83 @@
+<openerp>
+    <data>
+        <record id="final_gurantee_tree_view" model="ir.ui.view">
+            <field name="name">final.gurantee</field>
+            <field name="model">final.gurantee</field>
+            <field name="arch" type="xml">
+                <tree string="final.gurantee">
+                    <field name="number"/>
+                    <field name="project_id"/>
+                    <field name="journal_id"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="final_gurantee_amount"/>
+                    <field name="final_gurantee_per"/>
+                    <field name="bank_commission"/>
+                    <field name="move_id"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+        <record id="final_gurantee_form_view" model="ir.ui.view">
+            <field name="name">final.gurantee</field>
+            <field name="model">final.gurantee</field>
+            <field name="arch" type="xml">
+                <form string="final.gurantee">
+                     <header>
+                        <button name="confirm_quotation" type="object" string="Confirm" class="oe_highlight"
+                                attrs="{'invisible':[('status','!=', 'draft')]} "/>
+                        <button name="set_to_draft" type="object" string="Set To Draft"
+                        attrs="{'invisible':[('status','=', 'draft')]} " />
+                        <field name="status" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="project_id" required="1"/>
+                                <field name="journal_id" required="1"/>
+                                <field name="total_amount" />
+                                <field name="final_gurantee_per" />
+                                <field name="final_gurantee_amount" />
+                                <field name="move_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="bank_account_id" required="1"/>
+                                <field name="bank_commission" required="1"/>
+
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="final_gurantee_action_view" model="ir.actions.act_window">
+            <field name="name">Final Gurantee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">final.gurantee</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="final_gurantee_menu" name="Final Gurantee" parent="construction_categ"
+                  action="final_gurantee_action_view" sequence="8"/>
+
+
+        <record model="ir.sequence" id="seq_preliminary_gurantee_id">
+            <field name="name">Preliminary Gurantee</field>
+            <field name="code">final.gurantee</field>
+            <field name="prefix">PRG</field>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,104 @@
+<openerp>
+    <data>
+         <record id="clearance_custody_tree_view" model="ir.ui.view">
+            <field name="name">clearance.custody</field>
+            <field name="model">clearance.custody</field>
+            <field name="arch" type="xml">
+                <tree string="clearance.custody">
+                    <field name="number"/>
+                    <field name="employee_id" />
+                    <field name="date" />
+                    <field name="custody_id" />
+                    <field name="employee_account_id"/>
+                    <field name="amount" />
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="clearance_custody_form_view" model="ir.ui.view">
+            <field name="name">clearance.custody</field>
+            <field name="model">clearance.custody</field>
+            <field name="arch" type="xml">
+                <form string="clearance.custody">
+                    <header>
+                        <button name="confirm_quotation" type="object" string="Confirm" class="oe_highlight"
+                                attrs="{'invisible':[('state','!=', 'draft')]} "/>
+                        <field name="state" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="employee_id" required="1"/>
+                                <field name="custody_id" required="1"/>
+                                <field name="amount" required="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="project_id" />
+                                <field name="employee_account_id" />
+                                <field name="cleared_amount" />
+
+                            </group>
+                        </group>
+                        <!--<group>-->
+                            <!--&lt;!&ndash;<field name="note"/>&ndash;&gt;-->
+                        <!--</group>-->
+                        <notebook>
+                            <page string="Clearance Information">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="amount" required="1"/>
+                                    <field name="desc" required="1"/>
+                                    <field name="partner_id"/>
+                                    <field name="invoice_no"/>
+                                    <!--<field name="tax_no"/>-->
+                                    <field name="invoice_line_tax_id" widget="many2many_tags" />
+                                    <field name="project_id"/>
+                                    <field name="product_id"/>
+                                    <field name="journal_id" required="1"/>
+                                    <field name="expenses_account_id"/>
+                                    <field name="general_account_id"/>
+
+                                </tree>
+                            </field>
+                            </page>
+                            <page string="Information">
+                                <field name="move_ids">
+                                    <tree editable="bottom">
+                                        <field name="move_id"/>
+
+                                    </tree>
+
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="clearance_custody_action_view" model="ir.actions.act_window">
+            <field name="name">Clearance Custody</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">clearance.custody</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="clearance_custody_menu" name="Clearance Custody" parent="project_custody_categ"
+                  action="clearance_custody_action_view" sequence="1"/>
+
+
+        <record model="ir.sequence" id="seq_clearance_custody_id">
+            <field name="name">clearance Custody</field>
+            <field name="code">clearance.custody</field>
+            <field name="prefix">CLR</field>
+            <field name="padding">6</field>
+        </record>
+    </data>
+</openerp>
