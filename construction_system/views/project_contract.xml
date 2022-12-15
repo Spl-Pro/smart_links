@@ -1,0 +1,75 @@
+<openerp>
+    <data>
+        <record id="project_contract_tree_view" model="ir.ui.view">
+            <field name="name">project.contract</field>
+            <field name="model">project.contract</field>
+            <field name="arch" type="xml">
+                <tree string="project.contract">
+                    <field name="number"/>
+                    <field name="project_id"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="customer_type"/>
+                    <field name="retention_per"/>
+                    <field name="down_payment_per"/>
+                    <field name="final_gurantee"/>
+                </tree>
+            </field>
+        </record>
+        <record id="project_contract_form_view" model="ir.ui.view">
+            <field name="name">project.contract</field>
+            <field name="model">project.contract</field>
+            <field name="arch" type="xml">
+                <form string="project.contract">
+                     <header>
+                        <button name="confirm_quotation" type="object" string="Confirm" class="oe_highlight"
+                                attrs="{'invisible':[('status','!=', 'draft')]} "/>
+                        <button name="set_to_draft" type="object" string="Set To Draft"
+                        attrs="{'invisible':[('status','=', 'draft')]} " />
+                        <field name="status" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                        <group>
+                            <field name="number"/>
+                            <field name="project_id"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="retention_per"/>
+                            <field name="down_payment_per"/>
+                            <field name="final_gurantee"/>
+                        </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="customer_type" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                     <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="project_contract_action_view" model="ir.actions.act_window">
+            <field name="name">Project Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.contract</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="project_contract_menu" name="" parent="construction_categ"
+                  action="project_contract_action_view" sequence="2"/>
+
+
+        <record model="ir.sequence" id="seq_project_contract_id">
+            <field name="name">Project contract</field>
+            <field name="code">project.contract</field>
+            <field name="prefix">PJ/CON-</field>
+            <field name="padding">5</field>
+        </record>
+
+
+    </data>
+</openerp>

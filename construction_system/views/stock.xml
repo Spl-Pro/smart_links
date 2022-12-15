@@ -1,0 +1,132 @@
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <!--        <record id="stock_location_project_inherit_form" model="ir.ui.view">-->
+        <!--            <field name="name">stock.location</field>-->
+        <!--            <field name="model">stock.location</field>-->
+        <!--            <field name="inherit_id" ref="stock.view_location_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+
+        <!--                <xpath expr="//field[@name='partner_id']" position="before">-->
+        <!--                    <field name="project_id" attrs="{'invisible':[('usage','!=', 'customer')]} "/>-->
+        <!--                    <field name="customer" attrs="{'invisible':[('usage','!=', 'customer')]} "/>-->
+        <!--                </xpath>-->
+
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record id="contracting_stock_view_move_form_inherit" model="ir.ui.view">
+            <field name="name">stock.move</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="project_id" readonly="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="project_stock_tree_view" model="ir.ui.view">
+            <field name="name">project.stock</field>
+            <field name="model">project.stock</field>
+            <field name="arch" type="xml">
+                <tree string="Project Stock">
+                    <field name="number"/>
+                    <field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="expire_date"/>
+                    <field name="date"/>
+                    <!--                    <field name="location_id"/>-->
+<!--                    <field name="wcateg_id"/>-->
+<!--                    <field name="work_item"/>-->
+                </tree>
+            </field>
+        </record>
+        <record id="project_stock_form_view" model="ir.ui.view">
+            <field name="name">project.stock</field>
+            <field name="model">project.stock</field>
+            <field name="arch" type="xml">
+                <form string="Project Stock">
+                    <header>
+                        <button name="confirm_quotation" type="object" string="Confirm" class="oe_highlight"
+                                attrs="{'invisible':[('status','!=', 'draft')]} "/>
+                        <field name="status" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="project_id" required="1"/>
+                                <field name="project_type"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="warehouse_id" required="1"/>
+                                <field name="source_location_id" invisible="0"/>
+                                <field name="location_id"/>
+                            </group>
+                            <group>
+                                <field name="expire_date"/>
+                                <field name="date"/>
+                                <field name="wcateg_id"/>
+                                <field name="work_item"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="project_stock_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="wcateg_id"/>
+                                        <field name="product_id"/>
+                                        <field name="qty_available" readonly="1"/>
+                                        <field name="uom_id" readonly="1"/>
+                                        <field name="qty_uos"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Delivery Order" attrs="{'invisible':[('project_type','!=', 'customer_project')]}">
+                                <field name="project_move_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="stock_move_id" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Internal Transfer" attrs="{'invisible':[('project_type','!=', 'internal_project')]}">
+                                <field name="project_move_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="stock_move_id" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="project_stock_action_view" model="ir.actions.act_window">
+            <field name="name">Project Material Issue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.stock</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="project_stock_menu" name="Project Material Issue" parent="project_operations_menu_categ"
+                  action="project_stock_action_view"
+                  sequence="2"/>
+
+        <record id="seq_type_project_stock_id" model="ir.sequence">
+            <field name="name">Project stock</field>
+            <field name="code">project.stock</field>
+            <field name="prefix">WH/OUT</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</odoo>

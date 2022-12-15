@@ -1,0 +1,135 @@
+<odoo>
+    <data>
+        <record id="sub_contract_grement_tree_view" model="ir.ui.view">
+            <field name="name">sub.contract.agreement</field>
+            <field name="model">sub.contract.agreement</field>
+            <field name="arch" type="xml">
+                <tree string="sub.contract.agreement">
+                    <field name="number"/>
+                    <field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="sub_contract_grement_form_view" model="ir.ui.view">
+            <field name="name">sub.contract.agreement</field>
+            <field name="model">sub.contract.agreement</field>
+            <field name="arch" type="xml">
+                <form string="sub.contract.agreement">
+                     <header>
+                        <button name="approve" type="object" string="Confirm Agreement" class="oe_highlight" attrs="{'invisible':[('state','=', 'confirmed')]} " />
+                            <button name="down_payment" type="object" string="Down Payment" class="oe_highlight"
+                           attrs="{'invisible':['|',('is_down_payment','=', True),('state','=', 'draft')]} "  />
+                            <button name="view_down_payment" type="object" string="View Down Payment" class="oe_highlight"
+                            attrs="{'invisible':['|',('is_down_payment','!=', True),('state','=', 'draft')]} " />
+<!--                        <button name="create_planning_invoices" type="object"-->
+<!--                                string="Create Invoices" class="oe_highlight" attrs="{'invisible':[('state','=', 'draft')]} "/>-->
+                        <field name="state" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="partner_id" required="1"/>
+                                <field name="project_id" required="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="is_down_payment" invisible="1"/>
+                                <field name="is_project_invoice" invisible="1"/>
+                                <field name="invoice_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Work">
+                                <field name="work_lines_ids">
+                                    <tree editable="bottom">
+                                        <field name="subcontracted" invisible="1"/>
+                                        <field name="wcateg_id"/>
+                                        <field name="product_id"/>
+                                        <field name="description"/>
+                                        <field name="uom_id"/>
+                                        <field name="qty"/>
+                                        <field name="unit_price"/>
+                                        <field name="invoice_line_tax_id" widget="many2many_tags"/>
+                                        <field name="amount"/>
+                                        <field name="amount_tax" invisible="1"/>
+                                    </tree>
+                                </field>
+                                 <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="amount_untaxed" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+<!--                                    <div>-->
+                                        <label for="amount_tax"/>
+<!--                                        &lt;!&ndash;<button name="button_reset_taxes" string="(update)" class="oe_link oe_edit_only"&ndash;&gt;-->
+<!--                                        &lt;!&ndash;type="object" help="Recompute taxes and total"/>&ndash;&gt;-->
+<!--                                    </div>-->
+                                    <field name="amount_tax" nolabel="1" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string="Terms">
+                                <group>
+                                    <group>
+                                        <field name="start_date"/>
+                                        <field name="retention_per"/>
+                                        <field name="down_payment_per"/>
+                                    </group>
+                                    <group>
+                                        <field name="end_date"/>
+                                        <field name="payment_term_id"/>
+                                    </group>
+                                </group>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="sub_contract_grement_action_view" model="ir.actions.act_window">
+            <field name="name">Sub Contract Agreement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sub.contract.agreement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="sub_contracting_managment_categ" name="Sub-contracting"
+                  parent="project_operations_menu_categ" sequence="5"/>
+
+        <menuitem id="sub_contracting_agreement_menu" name="Sub-Contract agreement"
+                  parent="sub_contracting_managment_categ" action="sub_contract_grement_action_view" sequence="1"/>
+
+        <record id="project_invoice_tree1" model="ir.actions.act_window">
+            <field name="name">Customer Invoices</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('move_type','in',['out_invoice']),('project_id','!=',False)]</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+         <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('account.view_move_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('account.view_move_form')})]"/>
+        </record>
+        <menuitem id="sub_Contractors_invoices_menu" name="Sub-Contractors Invoices"
+                  parent="sub_contracting_managment_categ" action="project_invoice_tree1" sequence="3"/>
+
+
+
+        <record model="ir.sequence" id="seq_project_subcontract_id">
+            <field name="name">sub.contract.agreement</field>
+            <field name="code">sub.contract.agreement</field>
+            <field name="prefix">SUB/</field>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</odoo>

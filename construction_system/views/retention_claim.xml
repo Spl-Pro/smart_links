@@ -1,0 +1,81 @@
+<openerp>
+    <data>
+        <record id="retention_claim_tree_view" model="ir.ui.view">
+            <field name="name">retention.claim</field>
+            <field name="model">retention.claim</field>
+            <field name="arch" type="xml">
+                <tree string="retention.claim">
+                    <field name="number"/>
+                    <field name="date"/>
+                    <field name="project_id"/>
+                    <field name="journal_id"/>
+                    <field name="partner_id"/>
+                    <field name="bank_account_id"/>
+                    <field name="move_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="retention_claim_form_view" model="ir.ui.view">
+            <field name="name">retention.claim</field>
+            <field name="model">retention.claim</field>
+            <field name="arch" type="xml">
+                <form string="retention.claim">
+                    <header>
+                        <button name="confirm_quotation" type="object" string="Confirm" class="oe_highlight"
+                                attrs="{'invisible':[('status','!=', 'draft')]} "/>
+                        <button name="set_to_draft" type="object" string="Set To Draft"
+                        attrs="{'invisible':[('status','=', 'draft')]} " />
+                        <field name="status" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="project_id" required="1"/>
+                                <field name="journal_id" required="1"/>
+                                <field name="move_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="partner_id" required="1"/>
+                                <field name="bank_account_id" required="1"/>
+                                <field name="amount" required="1"/>
+
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="retention_claim_action_view" model="ir.actions.act_window">
+            <field name="name">Retention Claim</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">retention.claim</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="project_closing_menu" name="Project Closing" parent="project.menu_main_pm"
+                  sequence="8"/>
+
+
+        <menuitem id="retention_claim_menu" name="Retention Claim" parent="project_closing_menu"
+                  action="retention_claim_action_view" sequence="0"/>
+
+        <record model="ir.sequence" id="seq_retention_claim_id">
+            <field name="name">retention.claim</field>
+            <field name="code">retention.claim</field>
+            <field name="prefix">RET</field>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</openerp>

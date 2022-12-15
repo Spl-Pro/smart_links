@@ -1,0 +1,98 @@
+<odoo>
+    <data>
+        <record id="sub_contract_rfq_tree_view" model="ir.ui.view">
+            <field name="name">subcontract.rfq</field>
+            <field name="model">subcontract.rfq</field>
+            <field name="arch" type="xml">
+                <tree string="sub.contract.agreement">
+                    <field name="number"/>
+                    <field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="date"/>
+                    <field name="location_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="sub_contract_rfq_form_view" model="ir.ui.view">
+            <field name="name">subcontract.rfq</field>
+            <field name="model">subcontract.rfq</field>
+            <field name="arch" type="xml">
+                <form string="sub.contract.agreement">
+                     <header>
+                        <button name="confirm_order" type="object" string="Confirm Order" class="oe_highlight" attrs="{'invisible':[('state','=', 'confirmed')]} " />
+
+                        <field name="state" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="partner_id" required="1"/>
+                                <field name="project_id" required="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="location_id" required="1"/>
+                                <field name="is_confirmed" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="rfq_lines_ids">
+                                    <tree editable="bottom">
+                                        <field name="wcateg_id" required="1"/>
+                                        <field name="product_id" required="1"/>
+                                        <field name="date"/>
+                                        <field name="analytic_account"/>
+                                        <field name="uom_id" required="1"/>
+                                        <field name="qty" required="1"/>
+                                        <field name="unit_price"/>
+                                        <field name="invoice_line_tax_id" widget="many2many_tags"/>
+                                        <field name="sales_amount"/>
+                                        <field name="amount_tax" invisible="1"/>
+                                    </tree>
+                                </field>
+                                 <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="amount_untaxed" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <div>
+                                        <label for="amount_tax"/>
+<!--                                        <button name="button_reset_taxes" string="(update)" class="oe_link oe_edit_only"-->
+<!--                                        type="object" help="Recompute taxes and total"/>-->
+                                    </div>
+                                    <field name="amount_tax" nolabel="1" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="sub_contract_rfq_action_view" model="ir.actions.act_window">
+            <field name="name">Sub Contract RFQ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">subcontract.rfq</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="sub_Contracting_rfq_invoices_menu" name="Sub-Contracting RFQ"
+                  parent="sub_contracting_managment_categ" action="sub_contract_rfq_action_view" sequence="0"/>
+
+        <record model="ir.sequence" id="seq_project_subcontract_rfq_id">
+            <field name="name">Sub Contract RFQ</field>
+            <field name="code">subcontract.rfq</field>
+            <field name="prefix">SUB/</field>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</odoo>

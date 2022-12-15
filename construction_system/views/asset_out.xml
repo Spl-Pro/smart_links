@@ -1,0 +1,75 @@
+<openerp>
+    <data>
+        <record id="asset_out_tree_view" model="ir.ui.view">
+            <field name="name">asset.move.out</field>
+            <field name="model">asset.move.out</field>
+            <field name="arch" type="xml">
+                <tree string="asset.move.in">
+                    <field name="number"/>
+                    <field name="date"/>
+                    <field name="project_id"/>
+                    <field name="asset_id"/>
+                    <field name="reason"/>
+                    <field name="depreciation_end_date"/>
+                    <field name="depreciation_closed"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+        <record id="asset_out_form_view" model="ir.ui.view">
+            <field name="name">asset.move.out</field>
+            <field name="model">asset.move.out</field>
+            <field name="arch" type="xml">
+                <form string="asset.move.out">
+                    <header>
+                        <button name="confirm_asset" type="object" string="Confirm" class="oe_highlight"
+                         attrs="{'invisible':[('state','=', 'confirmed')]} " />
+                        <field name="state" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="project_id" required="1"/>
+                                <field name="asset_id" required="1" />
+                                <field name="reason" />
+
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="depreciation_end_date" />
+                                <field name="depreciation_closed" />
+
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="asset_out_action_view" model="ir.actions.act_window">
+            <field name="name">Asset Move Project Out</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">asset.move.out</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="asset_out_menu" name="Return FA From Project" parent="project_fixed_asset_categ"
+                  action="asset_out_action_view" sequence="2"/>
+
+        <record model="ir.sequence" id="seq_asset_out_id">
+            <field name="name">Asset Move Out</field>
+            <field name="code">asset.move.out</field>
+            <field name="prefix">FA/OUT/</field>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</openerp>
