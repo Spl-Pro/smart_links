@@ -1,0 +1,115 @@
+<odoo>
+    <data>
+
+        <record id="account_tax_default_inherit_form" model="ir.ui.view">
+            <field name="name">account.tax</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="is_default"/>
+                    <field name="account_collected_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_project_inherit_form_view" model="ir.ui.view">
+            <field name="name">project.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                      <button class="oe_stat_button" type="object" name="get_contract"
+                        icon="fa-book">
+                        <field string="Contracts" name="contract_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="is_planning"/>
+                    <field name="total_cost"/>
+                    <field name="awarded" invisible="0"/>
+
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="before">
+                    <field name="analytic_account_id" readonly="1" required="0" class="oe_inline" nolabel="1"/>
+                    <field name="project_type"/>
+                    <field name="project_sub_type"
+                           attrs="{'invisible':[('project_type','!=','customer_project')]}"/>
+<!--                    <field name="partner_id"-->
+<!--                           attrs="{'invisible':[('project_type','!=','customer_project')],'required': [('project_type','=','customer_project')]}"/>-->
+                    <field name="is_multi_quotation" attrs="{'invisible':[('project_type','!=','customer_project')]}"/>
+                    <field name="preliminary_gurantee_id"
+                           attrs="{'invisible':['|',('awarded','=',False),('project_type','!=','customer_project')]}"/>
+                    <field name="preliminary_gurantee_recovery_id"
+                           attrs="{'invisible':['|',('awarded','=',False),('project_type','!=','customer_project')]}"/>
+                    <field name="project_contract_id" readonly="1"/>
+<!--                    <field name="is_contract" invisible="1"/>-->
+                    <field name="is_quotation" invisible="0"/>
+                </xpath>
+
+                <xpath expr="//header" position="inside">
+                    <button string="Create Quotation" name="create_quotation" class="oe_highlight" type="object"
+                            attrs="{'invisible':[('is_quotation','=',True)]}"/>
+                </xpath>
+                                <xpath expr="//field[@name='partner_id']" position="attributes">
+                                    <attribute name="attrs">{'required': [('project_type','=','customer_project')]}</attribute>
+                                    <attribute name="attrs">{'invisible':[('project_type','!=','customer_project')]}</attribute>
+
+                                </xpath>
+                <xpath expr="//notebook/page[@name='description']" position="before">
+                    <page string="Bid  Requirments">
+                        <field name="bid_requirement_ids">
+                            <tree editable="bottom">
+                                <field name="wcateg_id"/>
+                                <field name="product_id"/>
+                                <field name="description"/>
+                                <field name="qty"/>
+                                <field name="uom_id"/>
+                                <field name="unit_cost"/>
+                                <field name="cost_amount"/>
+                                <field name="margin"/>
+                                <field name="sales_price"/>
+                                <field name="sales_amount"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Account Setup">
+                        <group>
+                            <group>
+                                <field name="retention_account"/>
+                                <field name="retention_account2" invisible="1"/>
+                                <field name="income_account"/>
+                                <field name="bank_commission"/>
+                                <field name="sub_contract_retention_account"/>
+                                <field name="sub_contract_down_payment_account"/>
+                            </group>
+                            <group>
+                                <field name="down_payment_account"/>
+                                <field name="preliminary_guarantee"/>
+                                <field name="final_guarantee"/>
+                                <field name="project_material_cost"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Project Assets">
+                        <field name="asset_ids">
+                            <tree create="false">
+                                <field name="asset_id"/>
+                                <field name="state"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="no_days"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

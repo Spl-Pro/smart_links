@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+        <record id="final_gurantee_recovery_tree_view" model="ir.ui.view">
+            <field name="name">final.gurantee recovery</field>
+            <field name="model">final.gurantee.recovery</field>
+            <field name="arch" type="xml">
+                <tree string="final.gurantee recovery">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="final_gurantee_recovery_form_view" model="ir.ui.view">
+            <field name="name">final.gurantee recovery</field>
+            <field name="model">final.gurantee.recovery</field>
+            <field name="arch" type="xml">
+                <form string="final.gurantee recovery">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="final_gurantee_recovery_action_view" model="ir.actions.act_window">
+            <field name="name">Final Gurantee Recovery</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">final.gurantee.recovery</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="final_gurantee_recovery_menu" name="Final Gurantee Recovery" parent="project_closing_menu"
+                  action="final_gurantee_recovery_action_view" sequence="1"/>
+
+    </data>
+</openerp>

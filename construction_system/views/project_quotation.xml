@@ -1,0 +1,126 @@
+<odoo>
+    <data>
+        <record id="project_quotation_tree_view" model="ir.ui.view">
+            <field name="name">project.quotation</field>
+            <field name="model">project.quotation</field>
+            <field name="arch" type="xml">
+                <tree string="Project Quotation">
+                    <field name="number"/>
+                    <field name="project_id"/>
+                    <field name="partner_id" />
+                    <field name="customer_type" invisible="1"/>
+                    <field name="expire_date"/>
+                    <field name="date"/>
+                    <field name="ref"/>
+                    <field name="preliminary_gurantee"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="project_quotation_form_view" model="ir.ui.view">
+            <field name="name">project.quotation</field>
+            <field name="model">project.quotation</field>
+            <field name="arch" type="xml">
+                <form string="Project Quotation">
+                    <header>
+                        <button name="confirm_quotation" type="object" string="Confirm Quotation" class="oe_highlight"
+                        attrs="{'invisible':[('status','!=', 'draft')]} " />
+                        <button name="action_quotation_send" type="object" string="Send by Email" class="oe_highlight"
+                        attrs="{'invisible':[('status','!=', 'draft')]} " />
+                        <button name="create_contract" type="object" string="Create Contract" class="oe_highlight"
+                        attrs="{'invisible':[('is_contract','=',True)]} " />
+                        <button name="set_to_draft" type="object" string="Set To Draft"
+                        attrs="{'invisible':[('status','=', 'draft')]} " />
+
+                        <field name="status" widget="statusbar"
+                               statusbar_colors='{"approved":"blue"}'/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number"/>
+<!--                                <field name="state" options="{'horizontal': false}"  widget="radio"/>-->
+                                <field name="project_id" required="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="customer_type" readonly="1"/>
+                                <field name="expire_date" required="1"/>
+                                <field name="is_contract" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="ref"/>
+                                <field name="preliminary_gurantee"/>
+                                <button type="object" name="create_bid_requirment" string="Get Bid Req" class="oe_highlight" attrs="{'invisible':[('status','!=', 'draft')]} "/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Quote  Lines">
+                        <field name="bid_requirement_ids">
+                            <tree editable="bottom">
+                                <field name="wcateg_id" readonly="0"/>
+                                <field name="product_id" readonly="0"/>
+                                <field name="description" readonly="0"/>
+                                <field name="qty" readonly="0"/>
+                                <field name="uom_id" readonly="0"/>
+                                <field name="unit_cost" readonly="0"/>
+                                <field name="cost_amount" readonly="0"/>
+                                <field name="margin" readonly="0"/>
+                                <field name="sales_price" readonly="0"/>
+                                <field name="invoice_line_tax_id" widget="many2many_tags"  />
+                                <field name="amount_tax"  invisible="0"/>
+                                <field name="sales_amount" readonly="0"/>
+                            </tree>
+                        </field>
+                                 <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="amount_untaxed" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <div>
+                                        <label for="amount_tax"/>
+                                        <!--<button name="button_reset_taxes" string="(update)" class="oe_link oe_edit_only"-->
+                                        <!--type="object" help="Recompute taxes and total"/>-->
+                                    </div>
+                                    <field name="amount_tax" nolabel="1" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                    </page>
+
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="project_quotation_action_view" model="ir.actions.act_window">
+            <field name="name">Project Quotation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.quotation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="project.open_view_project_all" id="project.menu_projects" name="Projects" parent="project.menu_main_pm"
+                  sequence="1" groups="make_invisible"/>
+        <menuitem id="construction_categ" name="Construction" parent="project.menu_main_pm" sequence="0"/>
+        <menuitem id="project_estimation_menu" name="Project Estimation" parent="construction_categ"
+                  action="project.open_view_project_all_config" sequence="0"/>
+        <menuitem id="project_quotation_menu" name="Project Quotation" parent="construction_categ"
+                  action="project_quotation_action_view" sequence="1"/>
+
+        <record model="ir.sequence" id="seq_project_quotation_id">
+            <field name="name">Project quotation</field>
+            <field name="code">project.quotation</field>
+            <field name="prefix">PJQ</field>
+            <field name="padding">5</field>
+        </record>
+
+
+    </data>
+</odoo>

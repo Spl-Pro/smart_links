@@ -1,0 +1,64 @@
+<openerp>
+    <data>
+        <record id="project_works_category_tree" model="ir.ui.view">
+            <field name="name">project.works.category</field>
+            <field name="model">project.works.category</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="parent_id"/>
+                    <field name="name"/>
+                    <field name="desc"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="project_works_category_search" model="ir.ui.view">
+            <field name="name">project.works.category</field>
+            <field name="model">project.works.category</field>
+            <field eval="3" name="priority"/>
+            <field name="arch" type="xml">
+                <search string="Stock Moves">
+                    <field name="parent_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="by_product" icon="terp-accessories-archiver" domain="[]"
+                                context="{'group_by':'parent_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="project_works_category_form" model="ir.ui.view">
+            <field name="name">project.works.category</field>
+            <field name="model">project.works.category</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="parent_id"/>
+                                <field name="name" required="1"/>
+                            </group>
+                            <group>
+                                <field name="desc" required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="project_works_category_action" model="ir.actions.act_window">
+            <field name="name">Project Works Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.works.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="project_works_category_menu" name="Project Works Category " parent="project.menu_project_config"
+                  action="project_works_category_action"
+                  sequence="10"/>
+
+    </data>
+</openerp>
