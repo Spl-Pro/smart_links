@@ -1,0 +1,141 @@
+<odoo>
+    <data>
+<!--                            <table style="font-family: 'Times New Roman'; width: 100%; border-collapse: collapse; border: 1px solid black ;font-size: 14px"-->
+<!--                                   class="table table-bordered">-->
+<!--                                <thead style="font-size:15px; line-height: 5px;border: 2px solid black;">-->
+<!--                                    <tr style="line-height:1px;">-->
+<!--                                        <th style="border: 1px solid black;" colspan="3" class="text-center">-->
+<!--                                            <div>-->
+<!--                                                <p>المورد</p>-->
+<!--                                                <span>Seller</span>-->
+<!--                                            </div>-->
+<!--                                        </th>-->
+<!--                                        <th style="border: 1px solid black;" colspan="3" class="text-center">-->
+<!--                                            <div>-->
+<!--                                                <p>العميل</p>-->
+<!--                                                <span>Buyer</span>-->
+<!--                                            </div>-->
+<!--                                        </th>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody style="line-height: 1px;border:1px solid black;">-->
+<!--                                    <tr>-->
+<!--                                        <td class="text-left" style="width:16%">Name:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.company_id.name"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right" style="width:16%">الاسم</td>-->
+<!--                                        <td class="text-left" style="width:16%">Name:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.partner_id.name"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right" style="width:16%">الاسم</td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                         <td class="text-left" style="width:16%">Arabic Name:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.company_id.arabic_name"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right" style="width:16%">الاسم بالعربى</td>-->
+
+<!--                                        <td class="text-left" style="width:16%">Arabic Name:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.partner_id.arabic_name"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right" style="width:16%">الاسم بالعربى</td>-->
+
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <tr>-->
+<!--                                            <td class="text-left" style="width:16%">City:</td>-->
+<!--                                            <td class="text-center" style="width:16%">-->
+<!--                                                <span t-field="doc.company_id.city"/>-->
+<!--                                            </td>-->
+<!--                                            <td class="text-right" style="width:16%">المدينة</td>-->
+<!--                                            <td class="text-left" style="width:16%">City:</td>-->
+<!--                                            <td class="text-center" style="width:16%">-->
+<!--                                                <span t-field="doc.company_id.city"/>-->
+<!--                                            </td>-->
+<!--                                            <td class="text-right" style="width:16%">المدينة</td>-->
+<!--                                        </tr>-->
+<!--                                        <td class="text-left" style="width:16%">Country:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.company_id.country_id.name"/>-->
+<!--                                        </td>-->
+
+<!--                                        <td class="text-right" style="width:16%">البلد</td>-->
+<!--                                        <td class="text-left" style="width:16%">Country:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.partner_id.country_id.name"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right" style="width:16%">البلد</td>-->
+
+<!--                                    </tr>-->
+<!--                                    <tr style="width:16%">-->
+<!--                                        <div class="row">-->
+<!--                                            <div class="col-2">Street:</div>-->
+<!--                                            <div class="col-2"><span t-field="doc.company_id.street"/>-->
+<!--                                        </div>-->
+<!--                                            <div class="col-2">الشارع</div>-->
+<!--                                            <div class="col-2">Street:</div>-->
+<!--                                            <div class="col-2"><span t-field="doc.partner_id.street"/></div>-->
+<!--                                            <div class="col-2">الشارع</div>-->
+
+<!--                                        </div>-->
+<!--&lt;!&ndash;                                        <td class="text-left">Street:</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-center" >&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span t-field="doc.company_id.street"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-right">الشارع</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-left" >Street:</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-center" >&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span t-field="doc.partner_id.street"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-right" >الشارع</td>&ndash;&gt;-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td class="text-left" style="width:16%">Vat Number:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.company_id.vat"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right" style="width:16%">رقم ضريبة-->
+<!--                                        </td>-->
+<!--                                        <td class="text-left" style="width:16%">VAT Number:</td>-->
+<!--                                        <td class="text-center" style="width:16%">-->
+<!--                                            <span t-field="doc.partner_id.vat"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right" style="width:16%">رقم ضريبة</td>-->
+
+<!--                                    </tr>-->
+<!--&lt;!&ndash;                                    <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-left" style="width:16%">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            Other Seller ID:&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-center"  style="width:16%" colspan="2">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span t-field="doc.partner_id.cr"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-left" style="width:16%">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            Other Buyer ID:&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td colspan="2" class="text-center" style="width:16%">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span t-field="doc.company_id.company_registry"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;                                    </tr>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;                                    <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td colspan="3" class="text-left"  style="width=48%"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-left" style="width=16%">Additional#:</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-center" style="width=16%">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span t-field="doc.partner_id.zip"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <td class="text-right" style="width=16%">الرقم الاضافى</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </tr>&ndash;&gt;-->
+
+<!--                                </tbody>-->
+<!--                            </table>-->
+
+    </data>
+</odoo>

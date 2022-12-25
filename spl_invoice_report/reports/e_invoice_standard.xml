@@ -1,0 +1,478 @@
+
+<!--<?xml version="1.0"?>-->
+<odoo>
+        <report
+                id="drc_invoice_report222"
+                model="account.move"
+                report_type="qweb-pdf"
+                string="E Standard Invoice"
+                name="spl_drc_invoice_report.drc_invoice_report_template22"
+                print_report_name = "(object.company_id.vat+'--'+object.name+'.pdf')"
+        />
+        <template id="drc_invoice_report_template22">
+<!--<t t-name="tax_reports.report_sale_order">-->
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <style type="text/css">
+                            @font-face {
+                            font-family: 'Amiri-Regular';
+                            font-style: bold;
+                            font-weight: 1200;
+                            src:url(/tax_reports/static/src/fonts/Amiri/Amiri-Regular.ttf) format('truetype');
+                            }
+                        </style>
+                        <style>
+                            .head{ margin-top: 0; }
+                            .lable_bold { font-weight: bold; }
+                            .second_table
+                            { padding: 2px; border: 1px solid black; border-collapse: collapse; font-size:11px; }
+                        </style>
+                        <!--            Title of Report    -->
+<!--                        style="padding-top:-50px;margin-top:-50px; text-align:center;"-->
+                        <div style="padding-top:-30px; margin-top:-30px;width:100%;text-align:center;font-size:35px;">
+                            <span style="text-align:center;font-weight:bold;">TAX INVOICE</span>
+                            <span style="margin-left:25px;font-weight:bold;font-family:'Amiri-Regular'">فاتورة ضريبيـة</span>
+
+                        </div>
+                        <div class="row" style="width:100%;">
+                            <div style="padding-left:15px;width:45%">
+                                <table class="float-left" style="width:100%;font-size:14px;">
+                                    <col style="width:35%"/>
+                                    <col style="width:40%"/>
+                                    <col style="width:35%"/>
+                                    <tr>
+                                        <th style="font-size:16px;padding:5px;border:3px solid lightgrey;">Invoice Type:</th>
+                                        <t t-if="doc.reversed_entry_id">
+                                            <th style="font-size:16px;padding:5px;border:3px solid lightgrey;">
+                                                <span>Credit Note -</span>&amp;nbsp;
+                                                <span style="font-family:'Amiri-Regular'">اشعار دائن</span>
+                                            </th>
+                                        </t>
+                                        <t t-if="not doc.reversed_entry_id">
+                                            <th style="font-size:16px;padding:5px;border:3px solid lightgrey;">Standard</th>
+                                        </t>
+                                        <th style="font-size:16px;padding:5px;text-align:right;border:3px solid lightgrey;"><span style="font-family:'Amiri-Regular'">:نوع الفاتورة</span></th>
+                                    </tr>
+                                    <t t-if="doc.reversed_entry_id">
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Reference STD Inv:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.reversed_entry_id.name"/></td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;"><span style="font-family:'Amiri-Regular'">:مرجع الفاتورة القياسي</span></th>
+                                        </tr>
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Date STD Inv:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.reversed_entry_id.invoice_date"/></td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;"><span style="font-family:'Amiri-Regular'">:تاريخ الفاتورة القياسي</span></th>
+                                        </tr>
+                                    </t>
+                                    <!--            reversal     -->
+                                    <t t-if="doc.reversed_entry_id">
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Credit Note #:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.name"/></td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;"><span style="font-family:'Amiri-Regular'">:اشعار دائن</span></th>
+                                        </tr>
+                                        <!--             Invoice Issue Date Sale Order Field      -->
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Credit Note Issue Date:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;"><t t-if="doc.invoice_date" t-esc="doc.invoice_date"/></td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;"><span style="font-family:'Amiri-Regular'">:تاريخ اشعار دائن</span></th>
+                                        </tr>
+                                        <!--              Date of Supply Sale Order Inherit Field      -->
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Date of Supply:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;">
+                                                <t t-if="doc.date_of_supply">
+                                                    <t t-esc="doc.date_of_supply"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="doc.invoice_date"/>
+                                                </t>
+                                            </td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;font-size:12px;"><span style="font-family:'Amiri-Regular'">:تاريخ التوريد</span></th>
+                                        </tr>
+                                    </t>
+                                    <!--                        #for normal-->
+                                    <t t-if="not doc.reversed_entry_id">
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Invoice Number:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.name"/></td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;font-size:12px;"><span style="font-family:'Amiri-Regular'">:رقم الفاتورة</span></th>
+                                        </tr>
+                                        <!--             Invoice Issue Date Sale Order Field      -->
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Invoice Date:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;">
+                                                <span><t t-if="doc.invoice_date" t-esc="doc.invoice_date"/></span>
+                                            </td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;font-size:12px;"><span style="font-family:'Amiri-Regular'">:تاريخ الفاتورة</span></th>
+                                        </tr>
+                                        <!--              Date of Supply Sale Order Inherit Field      -->
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Date of Supply:</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;">
+                                                <t t-if="doc.invoice_date_due">
+                                                    <t t-esc="doc.invoice_date_due"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="doc.invoice_date"/>
+                                                </t>
+                                            </td>
+                                            <th style="padding-right:5px;text-align:right;border:1px solid lightgrey;font-size:12px;"><span style="font-family:'Amiri-Regular'">:تاريخ التوريد</span></th>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+                            <div style="padding-left:5px;width:40%;height:100%;">
+                                <table style="width:99%;font-size:14px;">
+                                    <t t-if="doc.name">
+                                        <tr>
+                                            <th style="padding-left:5px;width:30%;border:1px solid lightgrey;">DN#</th>
+                                            <td style="padding-left:5px;width:70%;border:1px solid lightgrey;">
+                                                <t t-esc="doc.name"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="doc.po_number">
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">PO#</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;">
+                                                <t t-esc="doc.po_number"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+<!--                                    <t t-if="doc.gr_cr_number">-->
+<!--                                        <tr>-->
+<!--                                            <th style="padding-left:5px;border:1px solid lightgrey;">GR/CR#</th>-->
+<!--                                            <td style="padding-left:5px;border:1px solid lightgrey;">-->
+<!--                                                <t t-esc="doc.gr_cr_number"/>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+                                    <t t-if="doc.payment_reference">
+                                        <tr>
+                                            <th style="padding-left:5px;border:1px solid lightgrey;">Reference</th>
+                                            <td style="padding-left:5px;border:1px solid lightgrey;">
+                                                <t t-esc="doc.payment_reference"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+                            <div style="width:15%">
+                                <table class="float-right" style="width:100%;">
+                                    <tr>
+                                        <td>
+                                            <t t-if="not doc.state == 'draft'">
+                                                <div style="padding-left:20px;width:100px;height:100px;">
+                                                     <t t-esc="doc.generate_qr_code()"/>
+                                        <img t-att-src="image_data_uri(doc.qr_code)" style="max-height: 150px;"
+                                             alt="QR Code"/>
+<!--                                                    <span t-field="doc.qr_code" t-options="{&quot;widget&quot;: &quot;image&quot;}"/>-->
+                                                </div>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <table style="font-size:13px;" width="100%">
+                            <col style="width:13%"/>
+                            <col style="width:25%"/>
+                            <col style="width:12%"/>
+                            <col style="width:13%"/>
+                            <col style="width:25%"/>
+                            <col style="width:12%"/>
+                            <tr>
+                                <th style="border:3px solid lightgrey;" colspan="3">
+                                    <span style="font-size:16px;padding:5px;text-align:left;">Seller:</span>
+                                    <span class="float-right" style="font-size:16px;padding:5px;font-family:'Amiri-Regular';text-align:right;">:المورد</span>
+                                </th>
+                                <th style="border:3px solid lightgrey;" colspan="3">
+                                    <span style="font-size:16px;padding:5px;text-align:left;">Buyer:</span>
+                                    <span class="float-right" style="font-size:16px;padding:5px;font-family:'Amiri-Regular';text-align:right;">:العميل</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="3" style="padding-left:5px;border:1px solid lightgrey;"/>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Customer#:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.number"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">رقم العميل</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Name:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.name"/>-<t t-esc="doc.company_id.arabic_name"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الاسم</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Name:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.name"/>-<t t-esc="doc.partner_id.arabic_name"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الاسم</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Building No:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.building_no"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">رقم المبنى</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Building No:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.building_no"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">رقم المبنى</th>
+
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Address:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.street"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">عنوان</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Address:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.street"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">عنوان</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">District:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.district"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الحي</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">District:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.district"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الحي</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">City:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.city"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">المدينة</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">City:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.city"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">المدينة</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Country:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.country_id.name"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">البلد</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Country:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"> <t t-esc="doc.partner_id.country_id.name"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">البلد</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Postal Code:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.zip"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الرمز البريدي</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Postal Code:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.zip"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الرمز البريدي</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Additional No:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.additional_number"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الرقم الإضافي </th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Additional No:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.additional_number"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">الرقم الإضافي </th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">VAT Number:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.vat"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">رقم ضريبة </th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">VAT Number:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.vat"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">رقم ضريبة </th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Group VAT No:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.vat_group_no"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">رقم ضريبةللمجموعة</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Group VAT No:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.vat_group_no"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">رقم ضريبةللمجموعة</th>
+                            </tr>
+                            <tr>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Other Seller ID:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.company_id.other_seller_id"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">معرف آخر</th>
+                                <th style="padding-left:5px;border:1px solid lightgrey;">Other Buyer ID:</th>
+                                <td style="padding-left:5px;border:1px solid lightgrey;"><t t-esc="doc.partner_id.other_Buyer_id"/></td>
+                                <th style="padding-right:5px;border:1px solid lightgrey;font-family:'Amiri-Regular';text-align:right;">معرف آخر</th>
+                            </tr>
+                        </table>
+                        <t t-if="doc.invoice_line_ids">
+                            <table style="width:100%;margin-top:5px;font-size:12px;">
+                                <col style="width:7%"/>
+                                <col style="width:23%"/>
+                                <col style="width:8%"/>
+                                <col style="width:9%"/>
+                                <col style="width:8%"/>
+                                <col style="width:13%"/>
+                                <col style="width:8%"/>
+                                <col style="width:11%"/>
+                                <col style="width:13%"/>
+                                <tr>
+                                    <th style="border:3px solid lightgrey;" colspan="9">
+                                        <span style="font-size:16px;padding:5px;text-align:left;">Line Items:</span>
+                                        <span class="float-right" style="font-size:13px;padding:5px;text-align:right;font-family:'Amiri-Regular';">:توصيف السلع او الخدمات</span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Serial #</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">مسلسل</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Description</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">التفاصيل</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Quantity</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">الكمية</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Unit Price</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">سعر الوحدة</span><br/>
+                                        <span>(SAR)</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Discount</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">خصومات</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Taxable Amount</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">لمبلغ الخاضع للضريبة</span><br/>
+                                        <span>(SAR)</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Tax Rate</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">نسبة الضريبة</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Tax Amount</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">مبلغ الضريبة</span><br/>
+                                        <span>(SAR)</span>
+                                    </th>
+                                    <th style="text-align:center;border:1px solid lightgrey;">
+                                        <span style="padding-right:5px;padding-left:5px;">Item Subtotal</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;">(With VAT)</span><br/>
+                                        <span style="padding-right:5px;padding-left:5px;font-family:'Amiri-Regular';">المجموع شامل ضريبة</span><br/>
+                                        <span>(SAR)</span>
+                                    </th>
+                                </tr>
+
+                                <t t-set="serial_counter" t-value="0"/>
+                                <t t-set="tot_discount" t-value="0"/>
+                                <t t-foreach="doc.invoice_line_ids" t-as="line">
+                                    <t t-set="total_tax_percent" t-value="0"/>
+                                    <t t-set="total_tax_percent_inc" t-value="0"/>
+                                    <t t-foreach="line.tax_ids" t-as="tax_line">
+                                        <t t-set="total_tax_percent" t-value="total_tax_percent+tax_line.amount"/>
+                                        <t t-if="tax_line.price_include">
+                                            <t t-set="total_tax_percent_inc" t-value="total_tax_percent_inc+tax_line.amount"/>
+                                        </t>
+                                    </t>
+
+                                    <t t-set="serial_counter" t-value="serial_counter+1"/>
+                                    <tr>
+                                        <td style="border:1px solid lightgrey;text-align:center;">
+                                            <t t-esc="serial_counter"/>
+                                        </td>
+                                        <td style="padding-left:5px;border:1px solid lightgrey;text-align:left;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td style="padding-right:5px;border:1px solid lightgrey;text-align:right;">
+                                            <span t-esc="'{:,}'.format(line.quantity)"/>
+                                        </td>
+                                        <td style="padding-right:5px;border:1px solid lightgrey;text-align:right;">
+                                            <span t-esc="'{:,}'.format(round((line.price_unit/(1+total_tax_percent_inc/100)),2))"/>
+                                        </td>
+                                        <td style="padding-right:5px;border:1px solid lightgrey;text-align:right;">
+                                            <t t-set="discount_price" t-value="line.discount"/>
+                                            <span t-esc="'{:,}'.format(discount_price)"/>
+                                            <t t-set="tot_discount" t-value="tot_discount+discount_price"/>
+                                        </td>
+                                        <td style="padding-right:5px;border:1px solid lightgrey;text-align:right;">
+                                            <t t-set="taxalbe_amt" t-value="line.price_subtotal"/>
+                                            <t t-set="taxalbe_amt_str" t-value="'{:,}'.format(line.price_subtotal)"/>
+                                            <span t-esc="taxalbe_amt_str"/>
+                                        </td>
+                                        <td style="padding-right:5px;border:1px solid lightgrey;text-align:right;">
+                                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))" id="line_tax_ids1"/>
+                                        </td>
+                                        <td style="padding-right:5px;border:1px solid lightgrey;text-align:right;">
+                                            <t t-set="total_tax_amount" t-value="round(float(taxalbe_amt)*(total_tax_percent/100),2)"/>
+                                            <t t-esc="'{:,}'.format(total_tax_amount)"/>
+                                        </td>
+                                        <td style="padding-right:5px;border:1px solid lightgrey;text-align:right;">
+                                            <t t-esc="'{:,}'.format(line.price_total)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+
+                            <table style="margin-top:10px;float:right; width:60%;font-size:14px;page-break-inside: avoid;">
+                                <col style="width:48%"/>
+                                <col style="width:12%"/>
+                                <tr>
+                                    <th colspan="2" style="border:3px solid lightgrey;text-align:left;">
+                                        <span style="font-size:16px;padding:5px;">Total Amounts(SAR):</span>
+                                        <span class="float-right" style="font-size:16px;padding:5px;font-family:'Amiri-Regular';">:(إجمالي المبالغ(ريال</span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid lightgrey;">
+                                        <span style="padding-left:5px;">Total (Excluding VAT)</span>
+                                        <span class="float-right" style="padding-right:5px;font-family:'Amiri-Regular';text-align:right;">الإجمالي غيرشاملة ضريبة</span>
+                                    </td>
+                                    <td style="padding-right:5px;text-align:right;border:1px solid lightgrey;">
+                                        <t t-esc="'{:,}'.format(doc.amount_untaxed)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid lightgrey;">
+                                        <span style="padding-left:5px;">Discount</span>
+                                        <span class="float-right" style="padding-right:5px;font-family:'Amiri-Regular';text-align:right;">الخصومات</span>
+                                    </td>
+                                    <td style="padding-right:5px;text-align:right;border:1px solid lightgrey;">
+                                        <t t-esc="tot_discount"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid lightgrey;">
+                                        <span style="padding-left:5px;">Total Taxable amount (Excluding VAT)</span>
+                                        <span class="float-right" style="padding-right:5px;font-family:'Amiri-Regular';text-align:right;">الإجمالي الخاضع للضريبة</span>
+                                    </td>
+                                    <td style="padding-right:5px;text-align:right;border:1px solid lightgrey;">
+                                        <t t-esc="'{:,}'.format(doc.amount_untaxed)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid lightgrey;">
+                                        <span style="padding-left:5px;">Total VAT</span>
+                                        <span class="float-right" style="padding-right:5px;font-family:'Amiri-Regular';text-align:right;">إجمالي ضريبة القيمة المضافة</span>
+                                    </td>
+                                    <td style="padding-right:5px;text-align:right;border:1px solid lightgrey;">
+                                        <t t-esc="'{:,}'.format(doc.amount_tax)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid lightgrey;">
+                                        <span style="padding-left:5px;">Total Amount</span>
+                                        <span class="float-right" style="padding-right:5px;font-family:'Amiri-Regular';text-align:right;">إجمالي المبلغ</span>
+                                    </td>
+                                    <td style="padding-right:5px;text-align:right;border:1px solid lightgrey;">
+                                        <t t-esc="'{:,}'.format(doc.amount_total)"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style=" margin-top:10px; height:150px;width:39%;border:1px solid lightgrey;margin-top:5px;float:left;font-size:14px;page-break-inside: avoid;">
+                                <tr>
+                                    <td style="padding-left:5px;text-align:left;">
+                                        <t t-esc="doc.narration"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+<!--    </t>-->
+        </template>
+
+</odoo>
