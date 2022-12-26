@@ -4,7 +4,7 @@
             model="account.move"
             report_type="qweb-pdf"
             string="E Credit Note"
-            name="spl_drc_invoice_report.drc_credit_report_template"
+            name="spl_invoice_report.drc_credit_report_template"
             print_report_name = "(object.company_id.vat+'--'+object.name+'.pdf')"
     />
     <template id="drc_credit_report_template">
