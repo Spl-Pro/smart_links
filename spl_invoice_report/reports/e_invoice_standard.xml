@@ -6,7 +6,7 @@
                 model="account.move"
                 report_type="qweb-pdf"
                 string="E Standard Invoice"
-                name="spl_drc_invoice_report.drc_invoice_report_template22"
+                name="spl_invoice_report.drc_invoice_report_template22"
                 print_report_name = "(object.company_id.vat+'--'+object.name+'.pdf')"
         />
         <template id="drc_invoice_report_template22">

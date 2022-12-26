@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "SPl_DRC_invoice_report",
+    'name': "SPl_invoice_report",
 
     'summary': """
         Invoice report""",
